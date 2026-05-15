@@ -88,6 +88,24 @@ pipeline {
                 sh 'docker compose up --build -d'
             }
         }
+
+        stage('API tests') {
+            agent {
+                docker {
+                    image 'mcr.microsoft.com/playwright:v1.50.0-jammy'
+                    reuseNode true
+                    args '-u 0 --network=host' // to use docker
+                }
+            }
+            steps {
+                dir('tests-api') {
+                    sh 'npx wait-port https://localhost:8080/api/health -t 30000' // waits until app is ready with 30s timeout
+
+                    sh 'npm ci'
+                    sh 'npx playwight tests'
+                }
+            }
+        }
     }
     post {
         always {
