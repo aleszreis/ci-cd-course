@@ -2,9 +2,6 @@ FROM golang:1.21-alpine
 
 WORKDIR /app
 
-RUN mkdir /.cache 
-RUN chmod -R 777 /.cache
-
 # Create mount point directory with proper permissions
 RUN mkdir -p /data && chmod 777 /data
 
@@ -19,6 +16,9 @@ RUN go mod download
 
 # Copy source code
 COPY . .
+
+ENV GOCACHE=/tmp/go-build
+ENV HOME=/tmp
 
 # Build the application
 RUN go build -o main cmd/bugtracker/main.go
