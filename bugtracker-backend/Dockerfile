@@ -2,6 +2,8 @@ FROM golang:1.21-alpine
 
 WORKDIR /app
 
+RUN mkdir /.cache && chmod -R 777 /.cache
+
 # Create mount point directory with proper permissions
 RUN mkdir -p /data && chmod 777 /data
 
