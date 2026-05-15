@@ -102,7 +102,7 @@ pipeline {
                     sh 'npx wait-port localhost:8080/api/health -t 30000' // waits until app is ready with 30s timeout
 
                     sh 'npm ci'
-                    sh 'npx playwight tests'
+                    sh 'npx playwright test'
                 }
             }
         }
@@ -118,7 +118,7 @@ pipeline {
             steps {
                 dir('tests-e2e') {
                     sh 'npm ci'
-                    sh 'npc playwright test'
+                    sh 'npx playwright test'
                 }
             }
         }
