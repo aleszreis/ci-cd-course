@@ -17,8 +17,9 @@ RUN go mod download
 # Copy source code
 COPY . .
 
-ENV GOCACHE=/tmp/go-build
 ENV HOME=/tmp
+ENV GOCACHE=/tmp/go-build
+ENV GOPATH=/tmp/go
 
 # Build the application
 RUN go build -o main cmd/bugtracker/main.go
