@@ -17,8 +17,13 @@ pipeline {
                         'GOCACHE=/tmp/go-build',
                         'GOPATH=/tmp/go'
                     ]) {
-                    sh 'go test -v ./...'
+                    sh 'go test -v ./... 2>&1 | go-junit-report > test-results.xml'
                     }
+                }
+            }
+            post {
+                always {
+                    junit 'bugtracker-backend/test-results.xml'
                 }
             }
         }
@@ -36,6 +41,11 @@ pipeline {
                         npm ci
                         npm test
                        '''
+                }
+            }
+            post {
+                always {
+                    junit 'bugtracker-frontend/test-results.xml'
                 }
             }
         }
